@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  postgres:
+    build:
+      context: ./docker
+      dockerfile: postgres.Dockerfile
+    container_name: research_progres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: research
+      POSTGRES_PASSWORD: researchpass
+      POSTGRES_DB: research_db
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/backend.Dockerfile
+    container_name: research_backend
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app/backend
+      - ./gui:/app/gui
+      - ./data:/app/data
+    environment:
+      POSTGRES_USER: research
+      POSTGRES_PASSWORD: researchpass
+      POSTGRES_DB: research_db
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+volumes:
+  postgres_data:
