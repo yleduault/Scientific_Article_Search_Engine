@@ -1,0 +1,12 @@
+{
+  "name": "research-backend",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "backend",
+  "workspaceFolder": "/app",
+
+  "customizations": {
+    "zed": {
+      "extensions": [],
+    },
+  },
+}
